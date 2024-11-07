@@ -1,71 +1,38 @@
-// Lista para almacenar los estudiantes y sus calificaciones
-let estudiantes = [];
+function esPalindromo() {
+    // Solicita al usuario que ingrese el texto
+    let texto = prompt("Ingresa una palabra o frase para verificar si es un palíndromo:");
+    
+    // Definición de variables
+    let textoLimpio = '';
+    let esPalindromo = true;
+    let start = 0;
+    let end;
 
-// Función para agregar un nuevo estudiante
-function agregarEstudiante() {
-    let nombre = prompt("Ingresa el nombre del estudiante:");
-    let calificacion = parseFloat(prompt("Ingresa la calificación del estudiante:"));
-    estudiantes.push({ nombre: nombre, calificacion: calificacion });
-    console.log(`Estudiante ${nombre} agregado con calificación ${calificacion}.`);
-}
+    try {
+        // Limpieza del texto: minúsculas y solo caracteres alfanuméricos
+        textoLimpio = texto.toLowerCase().replace(/[^a-z0-9]/g, '');
+        end = textoLimpio.length - 1;
 
-// Función para mostrar la lista de estudiantes con sus calificaciones
-function mostrarEstudiantes() {
-    console.log("Lista de estudiantes y sus calificaciones:");
-    estudiantes.forEach((estudiante, index) => {
-        console.log(`${index + 1}. Nombre: ${estudiante.nombre}, Calificación: ${estudiante.calificacion}`);
-    });
-}
-
-// Función para calcular el promedio de las calificaciones
-function calcularPromedio() {
-    let suma = estudiantes.reduce((acc, estudiante) => acc + estudiante.calificacion, 0);
-    let promedio = suma / estudiantes.length;
-    console.log(`Promedio de las calificaciones del curso: ${promedio.toFixed(2)}`);
-}
-
-// Función para determinar cuántos estudiantes aprobaron y desaprobaron
-function contarAprobadosDesaprobados() {
-    let aprobados = estudiantes.filter(estudiante => estudiante.calificacion >= 60).length;
-    let desaprobados = estudiantes.length - aprobados;
-    console.log(`Estudiantes aprobados: ${aprobados}`);
-    console.log(`Estudiantes desaprobados: ${desaprobados}`);
-}
-
-// Función principal para gestionar el menú de opciones
-function gestionarNotas() {
-    let opcion;
-    do {
-        opcion = prompt(
-            "Seleccione una opción:\n" +
-            "1. Agregar un nuevo estudiante\n" +
-            "2. Mostrar lista de estudiantes\n" +
-            "3. Calcular el promedio del curso\n" +
-            "4. Determinar aprobados y desaprobados\n" +
-            "5. Salir"
-        );
-
-        switch (opcion) {
-            case "1":
-                agregarEstudiante();
-                break;
-            case "2":
-                mostrarEstudiantes();
-                break;
-            case "3":
-                calcularPromedio();
-                break;
-            case "4":
-                contarAprobadosDesaprobados();
-                break;
-            case "5":
-                console.log("Saliendo del programa...");
-                break;
-            default:
-                console.log("Opción inválida, intenta de nuevo.");
+        // Uso de un bucle `while` para verificar si el texto es un palíndromo
+        while (start < end) {
+            if (textoLimpio[start] !== textoLimpio[end]) {
+                esPalindromo = false;
+                break; // Salir del bucle si se detecta una diferencia
+            }
+            start++;
+            end--;
         }
-    } while (opcion !== "5");
+
+        // Retorno con operador ternario para decidir el resultado final
+        return esPalindromo ? true : false;
+    } catch (error) {
+        console.error("Error en la función esPalindromo:", error);
+        return false;
+    } finally {
+        console.log("Ejecución de la función esPalindromo completada.");
+    }
 }
 
-// Llamada a la función principal para iniciar el programa
-gestionarNotas();
+// Llamada a la función y muestra el resultado
+let resultado = esPalindromo();
+console.log(`¿Es un palíndromo? ${resultado}`);
